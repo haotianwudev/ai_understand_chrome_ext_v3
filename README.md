@@ -1,6 +1,6 @@
 # ai_understand_chrome_ext_v3
 
-This Chrome extension allows users to understand the select text on a webpage by right click, select 'Understand selected text'.
+This Chrome extension allows users to understand the select text on a webpage by right click, select 'Understand selected text'. Everything learned from ChatGPT.
 
 ## Installation
 
