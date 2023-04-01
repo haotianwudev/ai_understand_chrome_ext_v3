@@ -1,6 +1,6 @@
 const apiEndpoint = "https://lfigmzhb3d.execute-api.us-east-1.amazonaws.com/dev/ai_understand";
 
-function sendSelectedTextToAPI(info, tab) {
+function sendSelectedTextToAPI(info, tab, language) {
   const selectedText = info.selectionText;
 
   fetch(apiEndpoint, {
@@ -8,7 +8,7 @@ function sendSelectedTextToAPI(info, tab) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ message: selectedText }),
+    body: JSON.stringify({ message: selectedText, language : language }),
   })
     .then((response) => response.json())
     .then((data) => {
@@ -40,16 +40,24 @@ function showResponsePopup(responseText) {
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
-    id: 'sendSelectedTextToAPI',
-    title: 'Understand selected text',
+    id: 'Understand',
+    title: 'English',
+    contexts: ['selection'],
+  });
+  chrome.contextMenus.create({
+    id: 'UnderstandInChinese',
+    title: '中文',
     contexts: ['selection'],
   });
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId === 'sendSelectedTextToAPI') {
-    sendSelectedTextToAPI(info, tab);
-  }
+  if (info.menuItemId === 'Understand') {
+    sendSelectedTextToAPI(info, tab, "EN");
+  };
+  if (info.menuItemId === 'UnderstandInChinese') {
+    sendSelectedTextToAPI(info, tab, "CN");
+  };
 });
 
 
